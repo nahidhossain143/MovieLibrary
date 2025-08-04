@@ -1,0 +1,117 @@
+﻿@model MovieLibrary.Models.Movie
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<div class="container mt-3">
+    @if (!string.IsNullOrEmpty(ViewBag.Message))
+    {
+        <div class="alert alert-success">@ViewBag.Message</div>
+    }
+
+    <div class="row">
+        <div class="col-md-4">
+            <img src="@Url.Content("~/Movies/" + Model.FileName)" alt="@Model.Title" class="img-fluid rounded" />
+        </div>
+        <div class="col-md-8">
+            <h1>@Model.Title <small class="text-muted">(@Model.Year)</small></h1>
+            <p><strong>Genre:</strong> @Model.Genre</p>
+            <p><strong>Director:</strong> @Model.Director</p>
+            <p><strong>Cast:</strong> @Model.Cast</p>
+            <p>@Model.Description</p>
+
+            <hr />
+
+            <div>
+                <h4>Average Rating:</h4>
+                <div class="star-rating">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        var starClass = i <= Math.Round(Model.AverageRating) ? "fas" : "far";
+                        <i class="@starClass fa-star"></i>
+                    }
+                    <span> @Model.AverageRating.ToString("0.0") / 5</span>
+                </div>
+            </div>
+
+            <hr />
+
+            <div>
+                <h4>Your Rating:</h4>
+                <div class="rating-stars" data-title="@Model.Title" title="Click to rate">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        <i class="far fa-star" data-value="@i"></i>
+                    }
+                </div>
+            </div>
+
+            <form id="watchlistForm" method="post" action="@Url.Action(ViewBag.IsInWatchlist ? "RemoveFromWatchlist" : "AddToWatchlist", "Home")" style="margin-top: 15px;">
+                <input type="hidden" name="title" value="@Model.Title" />
+                <button type="submit" class="btn @(ViewBag.IsInWatchlist ? "btn-danger" : "btn-warning")">
+                    @(ViewBag.IsInWatchlist ? "Remove from Watchlist" : "Add to Watchlist")
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const stars = document.querySelectorAll(".rating-stars .fa-star");
+            let selectedRating = 0;
+
+            function highlightStars(rating) {
+                stars.forEach(star => {
+                    const starVal = parseInt(star.dataset.value);
+                    if (starVal <= rating) {
+                        star.classList.add('selected');
+                        star.classList.remove('hover');
+                    } else {
+                        star.classList.remove('selected');
+                        star.classList.remove('hover');
+                    }
+                });
+            }
+
+            stars.forEach(star => {
+                star.addEventListener('mouseenter', () => {
+                    const val = parseInt(star.dataset.value);
+                    stars.forEach(s => {
+                        if (parseInt(s.dataset.value) <= val) s.classList.add('hover');
+                        else s.classList.remove('hover');
+                    });
+                });
+
+                star.addEventListener('mouseleave', () => {
+                    stars.forEach(s => s.classList.remove('hover'));
+                    highlightStars(selectedRating);
+                });
+
+                star.addEventListener('click', () => {
+                    selectedRating = parseInt(star.dataset.value);
+
+                    fetch('@Url.Action("RateMovie", "Home")', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: `title=@Model.Title&rating=${selectedRating}`
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            highlightStars(selectedRating);
+                            alert("Thank you for rating!");
+                        } else {
+                            alert("Failed to submit rating.");
+                        }
+                    })
+                    .catch(() => alert("Error submitting rating."));
+                });
+            });
+        });
+    </script>
+}

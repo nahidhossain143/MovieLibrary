@@ -1,0 +1,207 @@
+﻿/* General Body */
+body {
+    background-color: #141414;
+    color: #e6e6e6;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin-bottom: 60px;
+}
+
+/* Links */
+a {
+    color: #f5c518;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+    a:hover {
+        color: #ffdb4d;
+    }
+
+/* Navbar Brand (if applicable) */
+.navbar-brand {
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: #f5c518 !important;
+}
+
+/* Card Styling */
+.card {
+    background-color: #222;
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: default;
+    position: relative;
+}
+
+    .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 24px rgba(245, 197, 24, 0.6);
+    }
+
+/* Card Image */
+.card-img-top {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+}
+
+/* Card Body */
+.card-body {
+    padding: 1rem 1rem 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Card Titles */
+.card-title {
+    color: #f5c518;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Genre Text */
+.card-genre {
+    font-size: 0.85rem;
+    color: #aaa;
+    margin-bottom: 1rem;
+}
+
+/* Star Rating */
+.star-rating {
+    color: #f5c518;
+    font-size: 1.2rem;
+    user-select: none;
+}
+
+    .star-rating .fa-star,
+    .star-rating .fa-star-half-alt {
+        margin-right: 3px;
+    }
+
+/* Buttons */
+.btn {
+    font-weight: 600;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-warning {
+    background-color: #f5c518;
+    color: #141414;
+    border: none;
+}
+
+    .btn-warning:hover {
+        background-color: #ffdb4d;
+        color: #141414;
+    }
+
+.btn-danger {
+    background-color: #e50914;
+    color: white;
+    border: none;
+}
+
+    .btn-danger:hover {
+        background-color: #f40612;
+        color: white;
+    }
+
+.btn-outline-warning {
+    border: 1.5px solid #f5c518;
+    color: #f5c518;
+}
+
+    .btn-outline-warning:hover {
+        background-color: #f5c518;
+        color: #141414;
+    }
+
+/* Alerts */
+.alert {
+    border-radius: 6px;
+    padding: 12px 20px;
+    font-size: 1rem;
+}
+
+.alert-success {
+    background-color: #2e4e2e;
+    border-color: #4caf50;
+    color: #a5d6a7;
+}
+
+.alert-info {
+    background-color: #254559;
+    border-color: #3f7cac;
+    color: #cde6f7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .card-img-top {
+        height: 220px;
+    }
+}
+
+/* Rating Stars Interactive (Details Page) */
+.rating-stars {
+    display: flex;
+    flex-direction: row;
+    font-size: 2rem;
+    color: #555;
+    cursor: pointer;
+    user-select: none;
+}
+
+    .rating-stars .fa-star {
+        margin-right: 8px;
+        transition: color 0.3s ease;
+    }
+
+        .rating-stars .fa-star.selected {
+            color: #f5c518 !important;
+        }
+
+        .rating-stars .fa-star.hover {
+            color: #ffcc00 !important;
+        }
+
+/* Container spacing */
+.container {
+    max-width: 1200px;
+}
+
+/* Utility for spacing */
+.mt-3 {
+    margin-top: 1rem !important;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+/* Form controls */
+.form-control, .form-select {
+    border-radius: 4px;
+    border: 1px solid #555;
+    background-color: #222;
+    color: #ddd;
+}
+
+    .form-control::placeholder {
+        color: #777;
+    }
+
+    /* Form controls focus */
+    .form-control:focus, .form-select:focus {
+        border-color: #f5c518;
+        box-shadow: 0 0 5px #f5c518;
+        outline: none;
+    }
